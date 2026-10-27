@@ -1,1 +1,199 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#205b43">
+  <title>Senior School Made Clear</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" id="homeLink">
+      <span class="brand-mark">S</span>
+      <span>Senior School <small>Made Clear</small></span>
+    </a>
+    <span class="version">v0.0</span>
+  </header>
+
+  <main class="container">
+    <section id="homeScreen" class="screen">
+      <div class="hero">
+        <span class="eyebrow">YOUR LEARNING JOURNEY</span>
+        <h1>Don't memorise it.<br>Understand it.</h1>
+        <p>Learn a concept, explain it in your own words, and prove your understanding.</p>
+        <div class="hero-actions">
+          <button class="btn primary" id="startLearning">Continue learning</button>
+          <button class="btn secondary" id="setGoalButton">Set my target</button>
+        </div>
+      </div>
+
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">YOUR GOAL</span>
+            <h2 id="goalTitle">Choose your target</h2>
+          </div>
+          <span class="target-icon">◎</span>
+        </div>
+        <div class="goal-stats">
+          <div><strong id="goalScore">80%</strong><span>Target score</span></div>
+          <div><strong id="masteredCount">0</strong><span>Topics mastered</span></div>
+          <div><strong id="badgeCount">0</strong><span>Badges earned</span></div>
+        </div>
+        <div class="progress-track"><div id="overallProgress" class="progress-fill"></div></div>
+        <p id="progressText" class="muted">Your progress will appear here.</p>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <div><span class="eyebrow">SUBJECT 01</span><h2>Chemistry</h2></div>
+          <span class="subject-symbol">⚗</span>
+        </div>
+        <div id="topicList" class="topic-list"></div>
+      </section>
+
+      <section class="panel">
+        <span class="eyebrow">YOUR ACHIEVEMENTS</span>
+        <h2>Every step counts.</h2>
+        <p class="muted">Badges celebrate mastery, improvement and independent thinking.</p>
+        <div id="badgeList" class="badge-list"></div>
+      </section>
+
+      <section class="notice">
+        <strong>Our learning principle</strong>
+        <p>It's okay to make mistakes. Understand them, learn from them, and try again.</p>
+      </section>
+    </section>
+
+    <section id="lessonScreen" class="screen hidden">
+      <button class="back-button" data-go-home>← Dashboard</button>
+      <div class="lesson-header">
+        <span class="eyebrow" id="lessonLabel">CHEMISTRY</span>
+        <h1 id="lessonTitle">What is matter?</h1>
+        <p id="lessonIntro"></p>
+      </div>
+
+      <article class="panel lesson-content">
+        <h2>Understand the idea</h2>
+        <div id="lessonBody"></div>
+        <div class="example-box">
+          <strong>Think about this</strong>
+          <p id="lessonExample"></p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Explain it in your own words</h2>
+        <p>Explain what you understand without copying the lesson. This practice is for learning, not a graded test.</p>
+        <textarea id="explanationInput" rows="5" placeholder="I understand this concept because..."></textarea>
+        <div class="button-row">
+          <button class="btn primary" id="checkExplanation">Check my explanation</button>
+          <button class="btn secondary" id="hintButton">Give me a hint</button>
+        </div>
+        <div id="practiceFeedback" class="feedback hidden" aria-live="polite"></div>
+        <div id="hintBox" class="hint-box hidden"></div>
+      </article>
+
+      <article class="panel">
+        <h2>Draw what you understand</h2>
+        <p>Practise a scientific sketch. Add labels or annotations where needed. This drawing is not automatically graded in v0.0.</p>
+        <canvas id="drawingCanvas" width="600" height="320" aria-label="Drawing area for a scientific diagram"></canvas>
+        <div class="button-row">
+          <button class="btn secondary" id="clearDrawing">Clear drawing</button>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Ready to test your understanding?</h2>
+        <p>A topic test has at least eight questions. The timer starts only when you begin the test.</p>
+        <button class="btn primary full-width" id="startTopicTest">Start topic mastery test</button>
+      </article>
+    </section>
+
+    <section id="testScreen" class="screen hidden">
+      <div class="test-top">
+        <button class="back-button" id="exitTest">← Exit test</button>
+        <div class="timer-card">
+          <span>TIME REMAINING</span>
+          <strong id="timerDisplay">20:00</strong>
+        </div>
+      </div>
+      <span class="eyebrow" id="testKind">TOPIC MASTERY TEST</span>
+      <h1 id="testTitle">Show what you know.</h1>
+      <p id="testInstructions" class="muted">Answer in your own words. Show your reasoning and working where relevant.</p>
+      <div class="test-progress">
+        <div class="progress-track"><div id="testProgress" class="progress-fill"></div></div>
+        <span id="questionCounter">Question 1 of 8</span>
+      </div>
+      <div id="questionArea"></div>
+      <div class="button-row test-navigation">
+        <button class="btn secondary" id="previousQuestion">Previous</button>
+        <button class="btn primary" id="nextQuestion">Next question →</button>
+      </div>
+      <button class="btn primary full-width hidden" id="submitTest">Submit assessment</button>
+      <p class="muted small">This is a practice assessment. The browser-based timer is not a secure examination lock.</p>
+    </section>
+
+    <section id="resultsScreen" class="screen hidden">
+      <div class="result-hero">
+        <div id="resultIcon" class="result-icon">✦</div>
+        <span class="eyebrow">ASSESSMENT RESULTS</span>
+        <h1 id="resultTitle">Well done for trying.</h1>
+        <div id="resultScore" class="result-score">0%</div>
+        <p id="resultMessage"></p>
+      </div>
+      <article class="panel">
+        <h2>What your answers show</h2>
+        <div id="resultBreakdown"></div>
+      </article>
+      <article class="panel">
+        <h2>Choose your next step</h2>
+        <p id="nextStepMessage">You can review the lesson or try again.</p>
+        <div class="button-row stack-mobile">
+          <button class="btn primary" id="reviewButton">Review lesson</button>
+          <button class="btn secondary" id="retakeButton">Retake with new questions</button>
+          <button class="btn secondary hidden" id="continueButton">Continue learning</button>
+        </div>
+      </article>
+      <button class="back-button" data-go-home>← Return to dashboard</button>
+    </section>
+
+    <section id="goalScreen" class="screen hidden">
+      <button class="back-button" data-go-home>← Dashboard</button>
+      <div class="lesson-header">
+        <span class="eyebrow">YOUR GOAL, YOUR JOURNEY</span>
+        <h1>What do you want to achieve?</h1>
+        <p>Choose a target that challenges you while remaining realistic.</p>
+      </div>
+      <form id="goalForm" class="panel">
+        <label for="goalName">My goal</label>
+        <input id="goalName" maxlength="80" placeholder="e.g. Understand Chemistry confidently">
+        <label for="goalTarget">My target assessment score</label>
+        <select id="goalTarget">
+          <option value="70">70%</option>
+          <option value="80" selected>80%</option>
+          <option value="90">90%</option>
+          <option value="100">100%</option>
+        </select>
+        <label for="goalTopic">My focus</label>
+        <select id="goalTopic">
+          <option value="all">All Chemistry topics</option>
+          <option value="matter">What is matter?</option>
+          <option value="states">States of matter</option>
+          <option value="changes">Changes of state</option>
+        </select>
+        <button class="btn primary full-width" type="submit">Save my target</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>Senior School Made Clear · v0.0</p>
+    <p>Learn it. Explain it. Prove it.</p>
+  </footer>
+</body>
+</html>
+
